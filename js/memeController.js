@@ -14,7 +14,7 @@ function memeInit(imgName) {
     gElCanvas = document.querySelector('#canvas')
     gCtx = gElCanvas.getContext('2d')
     console.log(gElCanvas)
-    const pos = { a: { x: gElCanvas.width * 0.02, y: gElCanvas.height * 0.2 }, b: { x: gElCanvas.width * 0.02, y: gElCanvas.height*1.1  } }
+    const pos = { a: { x: gElCanvas.width * 0.5, y: gElCanvas.height * 0.2 }, b: { x: gElCanvas.width * 0.5, y: gElCanvas.height*1.1  } }
     createText(pos)
     addListeners()
     renderMeme(imgName)
@@ -48,7 +48,7 @@ function renderMeme() {
     const img = new Image()
     const canvasContainer = document.querySelector('.canvas-container')
     const editorContainer=document.querySelector('.editor-container')
-    img.src = `/img/memesGallery/${gImgName}.jpg`
+    img.src = `img/memesGallery/${gImgName}.jpg`
     let canProportion = getImgSize(img, canvasContainer.clientWidth, editorContainer.clientHeight)
     gElCanvas.height = canProportion.canHeight - 1
     gElCanvas.width = canProportion.canWidth
@@ -120,15 +120,17 @@ function getEvPos(ev) {
   }
   return pos
 }
-function drawText(text, x, y, size,font,lineWidth) {
+function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke) {
     gCtx.lineWidth = lineWidth||1
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = 'white'
-
+    gCtx.textAlign= textAlign
     gCtx.font = `${size}px ${font}`
   gCtx.fillText(text, x, y) // Draws (fills) a given text at the given (x, y) position.
-  gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
-}
+    if (isStroke) {
+        gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
+    }
+  }
 // function saveAndRestoreExample() {
 //   gCtx.font = '30px Arial'
 //   gCtx.strokeStyle = 'green'
@@ -189,9 +191,7 @@ function onChangeLine() {
     document.querySelector('.item1').value = text
 }
 function onCreateText() {
-    const center = { x: gElCanvas.width * 0.02, y: gElCanvas.height / 2 + 30 }
-    console.log(gElCanvas)
-    console.log(center)
+    const center = { x: gElCanvas.width * 0.5, y: gElCanvas.height / 2 + 30 }
     let text = addText(center)
     document.querySelector('.item1').value = text
      renderMeme() 
@@ -209,7 +209,8 @@ function onDecreaseSize() {
     renderMeme()
 }
 function onAlineText(type) {
-    setAlinement(gElCanvas.width,type)
+    console.log(type)
+    setAlinement(type)
     renderMeme()
 }
 function onArrowChange(direction) {
@@ -223,5 +224,9 @@ function onSetFont() {
     if (font === gFont) { return }
     setFont(font)
     gFont=font
+    renderMeme()
+}
+function onStrokeToggle() {
+    toggleStroke()
     renderMeme()
 }

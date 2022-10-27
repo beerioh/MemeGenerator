@@ -16,7 +16,7 @@ function renderGallery() {
     const elGallery = document.querySelector('.grid-container')
   const strHtml = imgs.map(({ imgName }) => {
         return `
-        <container onclick="onImgSelect(${imgName})" class="itemContainer"><img class="imgItem" src="/img/memesGallery/${imgName}.jpg"/></container>
+        <container onclick="onImgSelect(${imgName})" class="itemContainer"><img class="imgItem" src="img/memesGallery/${imgName}.jpg"/></container>
         `
          }).join('')
     elGallery.innerHTML =strHtml

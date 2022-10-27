@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body class="main-layout" onload="onInit()">
+<section class="header-container full">
+<header class="main-header flex space-between align-center">
+        <img class="logo"src="/img/icons/LOGO.png"></img>
+        <nav class="main-nav">
+            <ul class="nav-bar flex clean-list">
+                <li class="flex align-center active" onclick="onPageChange('gallery')"><a href="#">Gallery</a></li>
+                <li class="flex align-center" onclick="onPageChange('memes')"><a href="#">Memes</a></li>
+                <li class="flex align-center" onclick="onPageChange('about')"><a href="#">About</a></li>
+            </ul>
+        </nav>
+        <!-- <button type="button" class="btn-menu" onclick="toggleMenu()">☰</button> -->
+</header>
+ </section>
+ <section class="content">
+    <section class="gallery-container container">
+        <section class="galleryController flex">
+            <input type="search" name="search-subject" placeholder="SEARCH...">
+            <ul class="subj-words flex clean-list" onclick="onWordSelection(this)">
+                <li class="flex align-center active"><a href="#">word</a></li>
+                <li class="flex align-center"><a href="#">word</a></li>
+                <li class="flex align-center"><a href="#">word</a></li>
+                <li class="flex align-center"><a href="#">word</a></li>
+            </ul>
+        </section>
+    <section class="grid-container">
+    </section>
+    </section>
+    <section class="saved-meme-gallery container hide">
+    <section class="grid-saved-container">
+    </section>
+    </section>
+    <section class="editor-container container hide flex">
+     <section class="canvas-container">
+     <canvas class="canvas" id="canvas" height="400" width="700" style="border: 1px solid black;"></canvas>
+     </section>
+     <section class="user-controller">
+    <!-- <a href="#" onclick="downloadCanvas(this)" download="">Download</a> -->
+     <section class="func-selectors">
+        <section class="controller-grid-container narrow-gap grid3">
+          <input class="item1 text-line-meme" oninput="onTextEdit(this.value)" type="text" placeholder="Lets Meme...">
+          <img class="item0 grid-item" onclick="onArrowChange('down')" src="/img/icons/arrow-up.png" alt="">
+          <img class="item2 grid-item" onclick="onChangeLine()" src="/img/icons/01.png" alt="">
+          <img class="item3 grid-item" onclick="onCreateText()" src="/img/icons/02.png" alt="">
+          <img class="item4 grid-item" onclick="onDeleteMeme()" src="/img/icons/03.png" alt="">
+          <img class="item20 grid-item" onclick="onArrowChange('up')" src="/img/icons/downArrow.png" alt="">
+          <img class="item5 grid-item" onclick="onIncreaseSize()" src="/img/icons/04.png" alt="">
+          <img class="item6 grid-item" onclick="onDecreaseSize()" src="/img/icons/05.png" alt="">
+          <img class="item7 grid-item" onclick="onAlineText('left')"src="/img/icons/06.png" alt="">
+          <img class="item8 grid-item" onclick="onAlineText('center')" src="/img/icons/07.png" alt="">
+          <img class="item9 grid-item" onclick="onAlineText('right')"src="/img/icons/08.png" alt="">
+          <!-- <label for="cars">Choose a car:</label> -->
+          <select class="font-selector item10" name="font-selector" id="font-selector" onclick="onSetFont()">
+                 <option value="impact">Impact</option>
+                 <option value="ariel">Ariel</option>
+                 <!-- <option value="otherFont"></option> -->
+          </select>
+          <img class="item11 grid-item" src="/img/icons/09.png" aria-label="Aline To Right" alt="">
+          <img class="item12 grid-item" src="/img/icons/10.png" alt="">
+          <div class="item13"></div>
+          <button class="item14 grid-item" >Share</button>
+          <a class="item15 grid-item flex" href="#" onclick="downloadCanvas(this)" download="my-img.jpg" >Download</a>
+        </section>
+     </section>
+     </section>
+    </section>
+    <section class="about hide"></section>
+ </section>
+<footer class="main-footer full flex space-between align-center">
+  <img class="logo-footer logo"src="/img/icons/LOGO.png"></img>  
+</footer>
+     <script src="/js/services/util.service.js"></script>
+     <script src="/js/services/text.service.js"></script>
+    <script src="/js/services/memeService.js"></script>
+    <script src="/js/services/galleryService.js"></script>
+    <script src="/js/galleryController.js"></script>
+    <script src="/js/memeController.js"></script>
+    
+</body>
+</html>

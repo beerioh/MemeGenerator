@@ -109,10 +109,11 @@ align-items: center;
 }
 .editor-container{
     /* border: 2px solid black; */
-    height: 37.5rem;
+    height: 52rem;
     margin-bottom: 1.9rem;
     justify-content: space-between;
     flex-direction: column;
+    
 }
 .user-controller{
     width: 100%;
@@ -141,6 +142,7 @@ align-items: center;
   width: 90%;
   gap:29px;
   margin-top: 2rem;
+  /* margin-bottom: 590px; */
 }
 .grid-item{
     background-color: var(--clr9);

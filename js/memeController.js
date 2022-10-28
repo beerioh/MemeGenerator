@@ -120,10 +120,10 @@ function getEvPos(ev) {
   }
   return pos
 }
-function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke) {
+function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke,color) {
     gCtx.lineWidth = lineWidth||1
     gCtx.strokeStyle = 'black'
-    gCtx.fillStyle = 'white'
+    gCtx.fillStyle = color
     gCtx.textAlign= textAlign
     gCtx.font = `${size}px ${font}`
   gCtx.fillText(text, x, y) // Draws (fills) a given text at the given (x, y) position.
@@ -131,17 +131,6 @@ function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke) {
         gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
     }
   }
-// function saveAndRestoreExample() {
-//   gCtx.font = '30px Arial'
-//   gCtx.strokeStyle = 'green'
-//   gCtx.strokeText('Saving the context', 10, 50)
-//   gCtx.save() // Saves the current drawing style state using a stack.
-//   gCtx.strokeStyle = 'black'
-//   gCtx.strokeText('Switching to something else', 10, 100)
-//   gCtx.restore() // Restores the drawing style state to the last element on the 'state stack' saved by save().
-//   gCtx.strokeText('Back to previous context', 10, 150)
-// }
-
 function clearCanvas() {
   // Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height)
   // to transparent black, erasing any previously drawn content.
@@ -184,7 +173,6 @@ function downloadCanvas(elLink) {
   elLink.href = data
   elLink.download = 'my-img.jpg'
 }
-
 function onChangeLine() {
     let text=nextLine()
     renderMeme()   
@@ -228,5 +216,17 @@ function onSetFont() {
 }
 function onStrokeToggle() {
     toggleStroke()
-    renderMeme()
+   
+}
+function onOpenColorPicker() {
+    document.querySelector(".colorP").click()
+}
+function onSetColor(value) {
+    console.log(`"${value}"`)
+    document.querySelector(".img10").style.border = `3px ridge ${value}`
+    changeTextColor(value)
+     renderMeme()
+}
+function changeColorPickerBorder(value) {
+    document.querySelector(".img10").style.border = `3px ridge ${value}`
 }

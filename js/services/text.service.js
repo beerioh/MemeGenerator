@@ -6,11 +6,13 @@ function createText({a,b}) {
     id:makeId(),
     pos:a,
     size: 60,
-    font: 'Stroke',
+    font: 'Impact',
     isDrag: false,
     text: 'Lets MeMe A',
     lineWidth: 3,
-    textAlign:'center'
+    textAlign: 'center',
+    isStroke: true,
+    color:'white'
   },
     {
     id:makeId(),
@@ -21,7 +23,8 @@ function createText({a,b}) {
     text: 'Lets MeMe B',
     lineWidth: 1,
     textAlign: 'center',
-    isStroke: true
+    isStroke: true,
+    color:'white'
     
     }]
 }
@@ -35,7 +38,9 @@ function addText({x,y}) {
     isDrag: false,
     text: `Lets MeMe ${gText.length + 1}`,
     lineWidth: 1,
-    textAlign:'center'
+    textAlign: 'center',
+    isStroke: true,
+    color:'white'
     }
   )
   gSelectedText=gText.length-1
@@ -49,7 +54,7 @@ function getTextLine() {
 }
 function mapTexts() {
    gText.map((text,indx) => {
-        drawText(text.text,text.pos.x,text.pos.y,text.size,text.font,text.lineWidth,text.textAlign,text.isStroke)
+        drawText(text.text,text.pos.x,text.pos.y,text.size,text.font,text.lineWidth,text.textAlign,text.isStroke,text.color)
         })
 }
 function isTextClicked({ x, y }) {
@@ -73,9 +78,9 @@ function nextLine() {
   gText[gSelectedText].lineWidth = 1
   gSelectedText === gText.length-1 ? gSelectedText = 0 : gSelectedText++
   gText[gSelectedText].lineWidth = 3
+  changeColorPickerBorder(gText[gSelectedText].color)
   return gText[gSelectedText].text
 }
-
 function deleteSelectedMeme() {
   gText.splice(gSelectedText, 1)
   gSelectedText=0
@@ -103,5 +108,8 @@ function setFont(font) {
 }
 function toggleStroke() {
   gText[gSelectedText].isStroke = !gText[gSelectedText].isStroke
+}
+function changeTextColor(value) {
+  gText[gSelectedText].color=value
 }
 

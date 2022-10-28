@@ -14,7 +14,7 @@
 <body class="main-layout" onload="onInit()">
 <section class="header-container full">
 <header class="main-header flex space-between align-center">
-        <img class="logo"src="/img/icons/LOGO.png"></img>
+        <img class="logo"src="img/icons/LOGO.png"></img>
         <nav class="main-nav">
             <ul class="nav-bar flex clean-list">
                 <li class="flex align-center active" onclick="onPageChange('gallery')"><a href="#">Gallery</a></li>
@@ -22,7 +22,7 @@
                 <li class="flex align-center" onclick="onPageChange('about')"><a href="#">About</a></li>
             </ul>
         </nav>
-        <!-- <button type="button" class="btn-menu" onclick="toggleMenu()">☰</button> -->
+        <button type="button" class="btn-menu grid-item" onclick="toggleMenu()">☰</button>
 </header>
  </section>
  <section class="content">
@@ -36,7 +36,7 @@
                 <li class="flex align-center"><a href="#">word</a></li>
             </ul>
         </section>
-    <section class="grid-container">
+    <section class="gallery-grid-container">
     </section>
     </section>
     <section class="saved-meme-gallery container hide">
@@ -50,7 +50,7 @@
      <section class="user-controller">
     <!-- <a href="#" onclick="downloadCanvas(this)" download="">Download</a> -->
      <section class="func-selectors">
-        <section class="controller-grid-container narrow-gap grid3">
+        <section class="controller-grid-container ">
           <input class="item1 text-line-meme" oninput="onTextEdit(this.value)" type="text" placeholder="Lets Meme...">
           <img class="item0 grid-item" onclick="onArrowChange('down')" src="img/icons/arrow-up.png" alt="">
           <img class="item2 grid-item" onclick="onChangeLine()" src="img/icons/01.png" alt="">
@@ -69,7 +69,8 @@
                  <!-- <option value="otherFont"></option> -->
           </select>
           <img class="item11 grid-item" src="img/icons/09.png" aria-label="Aline To Right" onclick="onStrokeToggle()"alt="">
-          <img class="item12 grid-item" src="img/icons/10.png" alt="">
+          <input class="item12 colorP" type="color" src="img/icons/10.png" id="fontColor" name="borderColor"  value="#190896"   onchange="onSetColor(this.value)" />
+          <img class="item12 img10 grid-item" src="img/icons/10.png" onclick="onOpenColorPicker()" alt="">
           <div class="item13"></div>
           <button class="item14 grid-item" >Share</button>
           <a class="item15 grid-item flex" href="#" onclick="downloadCanvas(this)" download="my-img.jpg" >Download</a>
@@ -80,7 +81,7 @@
     <section class="about hide"></section>
  </section>
 <footer class="main-footer full flex space-between align-center">
-  <img class="logo-footer logo"src="/img/icons/LOGO.png"></img>  
+  <img class="logo-footer logo"src="img/icons/LOGO.png"></img>  
 </footer>
      <script src="js/services/util.service.js"></script>
      <script src="js/services/text.service.js"></script>

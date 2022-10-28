@@ -86,11 +86,18 @@ function deleteSelectedMeme() {
   gSelectedText=0
 }
 function incSize() {
-  gText[gSelectedText].size=gText[gSelectedText].size + 5
+  let textSizePre = gText[gSelectedText].text.length * gText[gSelectedText].size
+  
+  gText[gSelectedText].size = gText[gSelectedText].size + 5
+  let textSizePost = gText[gSelectedText].text.length * gText[gSelectedText].size
+  gText[gSelectedText].pos.x=gText[gSelectedText].pos.x+((textSizePost-textSizePre)*0.1)
 }
 function decSize() {
-  gText[gSelectedText].size=gText[gSelectedText].size - 5
-  console.log(gText[gSelectedText].size)
+  let textSizePre = gText[gSelectedText].text.length * gText[gSelectedText].size
+  gText[gSelectedText].size = gText[gSelectedText].size - 5
+  let textSizePost = gText[gSelectedText].text.length * gText[gSelectedText].size
+  gText[gSelectedText].pos.x=gText[gSelectedText].pos.x+((textSizePost-textSizePre)*0.1)
+  
 }
 function setAlinement(type) {
   console.log(type)

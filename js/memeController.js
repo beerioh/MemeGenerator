@@ -58,42 +58,32 @@ function renderMeme() {
     gElCanvas.width = canProportion.canWidth
     gTextItem = getText()
     img.onload = () => {
-        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-        // document.querySelector('.item1').value = getTextLine()
-        mapTexts()
-       
-        
-    // memeInit(gElCanvas.width, gElCanvas.height)
+    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+    mapTexts()
   }
 }
 function onDown(ev) {
-  //Get the ev pos from mouse or touch
-    const pos = getEvPos(ev)
-  let gIndx = isTextClicked(pos)
-  console.log(gIndx)
-  if (!gIndx) return
+  const pos = getEvPos(ev)
+  let textInfo = isTextClicked(pos)
+  if (!textInfo) return
+  gIndx=textInfo.clickedText
+  document.querySelector('.item1').value = textInfo.text
   gStartPos = pos
   document.body.style.cursor = 'grabbing'
 }
 function onMove(ev) {
-  console.log('Im from onMove')
-
   const isDrag  = getTextForDrag()
   if (!isDrag) return
   const pos = getEvPos(ev)
-  //Calc the delta , the diff we moved
+  onChangeLine()
   const dx = pos.x - gStartPos.x
   const dy = pos.y - gStartPos.y
   moveText(dx, dy,gIndx)
-  //Save the last pos , we remember where we`ve been and move accordingly
   gStartPos = pos
-  //The canvas is render again after every move
   renderMeme()
 }
 function onUp() {
-  console.log('Im from onUp')
   setTextDrag()
-  // gId=''
   document.body.style.cursor = 'grab'
 }
 function resizeCanvas() {
@@ -102,19 +92,13 @@ function resizeCanvas() {
   gElCanvas.height = elContainer.offsetHeight
 }
 function getEvPos(ev) {
-
-  //Gets the offset pos , the default pos
   let pos = {
     x: ev.offsetX,
     y: ev.offsetY
   }
-  // Check if its a touch ev
   if (TOUCH_EVS.includes(ev.type)) {
-    //soo we will not trigger the mouse ev
     ev.preventDefault()
-    //Gets the first touch point
     ev = ev.changedTouches[0]
-    //Calc the right pos according to the touch screen
     pos = {
       x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
       y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
@@ -128,25 +112,18 @@ function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke,color,strok
     gCtx.fillStyle = color
     gCtx.textAlign= textAlign
     gCtx.font = `${size}px ${font}`
-  gCtx.fillText(text, x, y) // Draws (fills) a given text at the given (x, y) position.
+    gCtx.fillText(text, x, y)
     if (isStroke) {
-        gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
+        gCtx.strokeText(text, x, y)
     }
   }
 function clearCanvas() {
-  // Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height)
-  // to transparent black, erasing any previously drawn content.
   gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-  // You may clear part of the canvas
-  // gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height / 4)
 }
 function downloadCanvas(elLink) {
-    console.log('hi')
-  // Gets the canvas content and convert it to base64 data URL that can be save as an image
-  const data = gElCanvas.toDataURL(/* DEFAULT: 'image/png'*/) // Method returns a data URL containing a representation of the image in the format specified by the type parameter.
-  console.log('data', data) // Decoded the image to base64 
-  elLink.href = data // Put it on the link
-  elLink.download = 'shuki' // Can change the name of the file
+  const data = gElCanvas.toDataURL() 
+  elLink.href = data 
+  elLink.download = 'canva' 
 }
 function addListeners() {
   addMouseListeners()
@@ -208,9 +185,7 @@ function onArrowChange(direction) {
     renderMeme()
 }
 function onSetFont() {
-
     let font = document.querySelector(".font-selector").value
-    console.log(font)
     if (font === gFont) { return }
     setFont(font)
     gFont=font
@@ -218,7 +193,7 @@ function onSetFont() {
 }
 function onStrokeToggle() {
     toggleStroke()
-   
+    renderMeme()
 }
 function onOpenColorPicker() {
     document.querySelector(".colorP").click()

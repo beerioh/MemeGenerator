@@ -17,7 +17,7 @@ function createText({ a, b ,width}) {
     textAlign: 'center',
     isStroke: true,
     color: 'white',
-    stroke: 'black'
+    stroke: 'orange'
   },
     {
     id:makeId(),
@@ -56,11 +56,11 @@ function addText({x,y}) {
 function getText() {
   return gText
 }
-function getTextForDrag(  ) {
-  console.log(gText[gId.indx].isDrag)
+function getTextForDrag() {
+  gText[gSelectedText].stroke ='red'
  return gText[gId.indx].isDrag
 }
-function getTextLine() {
+function getTextLine() {k
   return gText[gSelectedText].text
 }
 function mapTexts() {
@@ -77,9 +77,11 @@ function isTextClicked(pos) {
   })
   if (clickedText) {
     gText[findIndex(gText, clickedText.id)].isDrag = true
-     console.log(gText)
     gId = { id: clickedText.id, indx: findIndex(gText, clickedText.id) }
-    return clickedText.id
+    text = gText[gId.indx].text
+    let textInfo = { text, clickedText: clickedText.id }
+    gSelectedText=gId.indx
+    return textInfo
   }
 }
 function setTextDrag( ) {
@@ -87,7 +89,6 @@ function setTextDrag( ) {
   gId={}
 }
 function moveText(dx, dy) {
-  console.log('yes')
   gText[gId.indx].pos.x += dx
   gText[gId.indx].pos.y += dy
 }
@@ -95,11 +96,6 @@ function updateText(text) {
   gText[gSelectedText].text = text
 }
 function nextLine() {
-  if (gText.length === 1) { return }
-  gText[gSelectedText].lineWidth = 1
-  gSelectedText === gText.length-1 ? gSelectedText = 0 : gSelectedText++
-  gText[gSelectedText].lineWidth = 3
-  changeColorPickerBorder(gText[gSelectedText].color)
   return gText[gSelectedText].text
 }
 function deleteSelectedMeme() {

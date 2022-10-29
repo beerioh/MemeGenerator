@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
-<body class="main-layout" onload="onInit()">
+<body class="main-layout flex" onload="onInit()">
 <section class="header-container full">
 <header class="main-header flex space-between align-center">
         <img class="logo"src="img/icons/LOGO.png"></img>
@@ -22,12 +22,12 @@
                 <li class="flex align-center" onclick="onPageChange('about')"><a href="#">About</a></li>
             </ul>
         </nav>
-        <button type="button" class="btn-menu grid-item" onclick="toggleMenu()">☰</button>
+        <button type="button" class="btn-menu" onclick="toggleMenu()">☰</button>
 </header>
  </section>
  <section class="content">
-    <section class="gallery-container container">
-        <section class="galleryController flex">
+    <section class="gallery-container">
+        <!-- <section class="galleryController flex">
             <input type="search" name="search-subject" placeholder="SEARCH...">
             <ul class="subj-words flex clean-list" onclick="onWordSelection(this)">
                 <li class="flex align-center active"><a href="#">word</a></li>
@@ -35,15 +35,15 @@
                 <li class="flex align-center"><a href="#">word</a></li>
                 <li class="flex align-center"><a href="#">word</a></li>
             </ul>
-        </section>
+        </section> -->
     <section class="gallery-grid-container">
     </section>
     </section>
-    <section class="saved-meme-gallery container hide">
+    <section class="saved-meme-gallery hide">
     <section class="grid-saved-container">
     </section>
     </section>
-    <section class="editor-container container hide flex">
+    <section class="editor-container hide flex">
      <section class="canvas-container">
      <canvas class="canvas" id="canvas" height="400" width="700" style="border: 1px solid black;"></canvas>
      </section>
@@ -80,7 +80,7 @@
     </section>
     <section class="about hide"></section>
  </section>
-<footer class="main-footer full flex space-between align-center">
+<footer class="main-footer flex full">
   <img class="logo-footer logo"src="img/icons/LOGO.png"></img>  
 </footer>
      <script src="js/services/util.service.js"></script>

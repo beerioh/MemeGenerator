@@ -24,7 +24,6 @@ function renderGallery() {
 
 function onImgSelect(imgName) {
     memeInit(imgName)
-    
 }
 
 

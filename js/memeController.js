@@ -7,17 +7,17 @@ let gFont
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 function memeInit(imgName) {
     gImgName=imgName
-    const gridContainer = document.querySelector('.gallery-container')
+  const gridContainer = document.querySelector('.gallery-container')
+  console.log(gridContainer)
     gridContainer.classList.add("hide")
     const editorContainer = document.querySelector('.editor-container')
     editorContainer.classList.remove("hide")
     gElCanvas = document.querySelector('#canvas')
     gCtx = gElCanvas.getContext('2d')
-    console.log(gElCanvas)
-    const pos = { a: { x: gElCanvas.width * 0.5, y: gElCanvas.height * 0.2 }, b: { x: gElCanvas.width * 0.5, y: gElCanvas.height*1.1  } }
-    createText(pos)
     addListeners()
     renderMeme(imgName)
+    const pos = { a: { x: gElCanvas.width * 0.5, y: gElCanvas.height * 0.22 }, b: { x: gElCanvas.width * 0.5, y: gElCanvas.height * 0.9},width:gElCanvas.width,height:gElCanvas.height }
+    createText(pos,gElCanvas)
 }
 function onPageChange(page) {
     const editorContainer=document.querySelector('.editor-container')
@@ -50,10 +50,9 @@ function renderMeme() {
     const editorContainer=document.querySelector('.editor-container')
     img.src = `img/memesGallery/${gImgName}.jpg`
     let canProportion = getImgSize(img, canvasContainer.clientWidth, editorContainer.clientHeight)
-    gElCanvas.height = canProportion.canHeight - 1
+    gElCanvas.height = canProportion.canHeight
     gElCanvas.width = canProportion.canWidth
     gTextItem = getText()
-    
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         // document.querySelector('.item1').value = getTextLine()
@@ -96,6 +95,7 @@ function onUp() {
 }
 function resizeCanvas() {
   const elContainer = document.querySelector('.canvas-container')
+  console.log(elContainer.offsetWidth)
   gElCanvas.width = elContainer.offsetWidth
   gElCanvas.height = elContainer.offsetHeight
 }
@@ -179,7 +179,7 @@ function onChangeLine() {
     document.querySelector('.item1').value = text
 }
 function onCreateText() {
-    const center = { x: gElCanvas.width * 0.5, y: gElCanvas.height / 2 + 30 }
+    const center = { x: gElCanvas.width * 0.5, y: gElCanvas.height / 2  }
     let text = addText(center)
     document.querySelector('.item1').value = text
      renderMeme() 

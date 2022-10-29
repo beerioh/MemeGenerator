@@ -9,14 +9,12 @@ var gMeme = { selectedImgId: 5, selectedLineIdx: 0, lines: [{ txt: 'I sometimes 
 function getImgSize(img, canWidth, canHeight) {
     let imgProp = img.width/img.height
     let canProp =  canWidth/canHeight 
-    console.log(imgProp,img.height,img.width ,canProp ,canHeight ,canWidth)
+    // console.log(imgProp,img.height,img.width ,canProp ,canHeight ,canWidth)
     if (imgProp > canProp) {
         return { canHeight: img.height * canWidth / img.width, canWidth}
     }
-    if (imgProp < canProp) {
+    if (imgProp <= canProp) {
         console.log(img.height * canHeight / img.width,img.height,canHeight,img.width)
         return { canHeight, canWidth: img.width * canHeight /img.height }
     }
-    // alert(img.width + 'x' + img.height);
-    // return (img.height*canWidth)/img.width
 }

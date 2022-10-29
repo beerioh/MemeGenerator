@@ -1,11 +1,14 @@
 let gText
-let gSelectedText=0
+let gSelectedText = 0
+let gFontSize=60
 
-function createText({a,b}) {
+function createText({ a, b ,width}) {
+  
+  gFontSize=width/11
   gText = [{
     id:makeId(),
     pos:a,
-    size: 60,
+    size: gFontSize,
     font: 'Impact',
     isDrag: false,
     text: 'Lets MeMe A',
@@ -17,7 +20,7 @@ function createText({a,b}) {
     {
     id:makeId(),
     pos:b,
-    size: 60,
+    size: gFontSize,
     font: 'Impact',
     isDrag: false,
     text: 'Lets MeMe B',
@@ -33,10 +36,10 @@ function addText({x,y}) {
     {
     id:makeId(),
     pos:{x,y},
-    size: 60,
+    size: gFontSize,
     font: 'Impact',
     isDrag: false,
-    text: `Lets MeMe ${gText.length + 1}`,
+    text: `Lets MeMe ${gText.length}`,
     lineWidth: 1,
     textAlign: 'center',
     isStroke: true,

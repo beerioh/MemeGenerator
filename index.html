@@ -41,11 +41,11 @@
     </section>
     </section>
     
-    <section class="saved-meme-gallery hide">
+    <div class="saved-meme-gallery hide">
     
     <section class="grid-saved-container">
     </section>
-    </section>
+    </div>
     <section class="editor-container hide flex">
      <section class="canvas-container">
      <canvas class="canvas" id="canvas" height="400" width="700" style="border: 1px solid black;"></canvas>
@@ -75,7 +75,7 @@
           <input class="item12 colorP" type="color" src="img/icons/10.png" id="fontColor" name="borderColor"  value="#190896"   onchange="onSetColor(this.value)" />
           <img class="item12 img10 grid-item" src="img/icons/10.png" onclick="onOpenColorPicker()" alt="">
           <div class="item13"></div>
-          <button class="item14 grid-item" >Share</button>
+          <button class="item14 grid-item" onclick="onSaveImg()">Save To Memes</button>
           <a class="item15 grid-item flex" href="#" onclick="downloadCanvas(this)" download="my-img.jpg" >Download</a>
         </section>
      </section>
@@ -87,6 +87,7 @@
   <img class="logo-footer logo"src="img/icons/LOGO.png"></img>  
 </footer>
      <script src="js/services/util.service.js"></script>
+     <script src="js/services/storage.service.js"></script>
      <script src="js/services/text.service.js"></script>
     <script src="js/services/memeService.js"></script>
     <script src="js/services/galleryService.js"></script>

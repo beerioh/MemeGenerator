@@ -2,7 +2,10 @@ let gText
 let gSelectedText = 0
 let gFontSize = 60
 let gStartPos
-let gId={}
+let gId = {}
+let imgCounter = 0
+let gMemes = []
+const MEME_TO_STORAGE = "memeArray"
 
 function createText({ a, b ,width}) {
   gFontSize=width/11
@@ -136,4 +139,16 @@ function toggleStroke() {
 function changeTextColor(value) {
   gText[gSelectedText].color=value
 }
+function saveDataUrl(imgData) {
+  gMemes.push(imgData)
+  localStorage.setItem(MEME_TO_STORAGE, gMemes);
+}
+function loadCanvas() {
 
+  var image = localStorage.getItem(MEME_TO_STORAGE);
+console.log(image)
+  imgCounter++
+  // gMemes.push({imgCounter: saveDataUrl(image) })
+  console.log(gMemes)
+  renderMemesToGallery(gMemes)
+}

@@ -218,3 +218,26 @@ function toggleMenu() {
   }
   else { document.querySelector('.btn-menu').style.backgroundImage = xMenu, menuBtn = 2 }
 }
+function onSaveImg() {
+  let imgData = gElCanvas.toDataURL();
+  if (typeof (localStorage) !== "undefined") {
+    saveDataUrl(imgData)
+ } else {
+    document.getElementById("save").innerHTML.dataURL = "Local Storage not supported";
+  }
+  onRenderMemesGallery()
+}
+function onRenderMemesGallery() {
+  loadCanvas()
+}
+function renderMemesToGallery(gMemes) {
+    const memeGallery = document.querySelector('.saved-meme-gallery')
+    const strHtml = gMemes.map(meme => {
+      return `< img src =data:image/png;base64, "${meme}"/>`
+    }).join('')
+    memeGallery.innerHTML = strHtml
+  }
+
+
+    
+     

@@ -13,16 +13,17 @@
 </head>
 <body class="main-layout flex" onload="onInit()">
 <section class="header-container full">
+ <div class="main-screen full" onclick="toggleMenu()"></div>
 <header class="main-header flex space-between align-center">
         <img class="logo"src="img/icons/LOGO.png"></img>
         <nav class="main-nav">
             <ul class="nav-bar flex clean-list">
-                <li class="flex align-center active" onclick="onPageChange('gallery')"><a href="#">Gallery</a></li>
-                <li class="flex align-center" onclick="onPageChange('memes')"><a href="#">Memes</a></li>
-                <li class="flex align-center" onclick="onPageChange('about')"><a href="#">About</a></li>
+                <li class="flex align-center active" onclick="onPageChange('gallery'),toggleMenu()"><a href="#">Gallery</a></li>
+                <li class="flex align-center" onclick="onPageChange('memes'),toggleMenu()"><a href="#">Memes</a></li>
+                <li class="flex align-center" onclick="onPageChange('about'),toggleMenu()"><a href="#">About</a></li>
             </ul>
         </nav>
-        <button type="button" class="btn-menu" onclick="toggleMenu()">☰</button>
+        <button type="button" class="btn-menu" onclick="toggleMenu()"></button>
 </header>
  </section>
  <section class="content">
@@ -50,8 +51,6 @@
      <canvas class="canvas" id="canvas" height="400" width="700" style="border: 1px solid black;"></canvas>
      </section>
      <section class="user-controller">
-        
-    <!-- <a href="#" onclick="downloadCanvas(this)" download="">Download</a> -->
      <section class="func-selectors">
         <section class="controller-grid-container ">
           <input class="item1 text-line-meme" oninput="onTextEdit(this.value)" type="text" placeholder="Lets Meme...">

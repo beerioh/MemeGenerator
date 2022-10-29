@@ -5,6 +5,7 @@ let gTextItem = []
 let gImgName
 let gFont
 let gIndx
+let menuBtn=1
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 function memeInit(imgName) {
   gImgName = imgName
@@ -15,7 +16,7 @@ function memeInit(imgName) {
   editorContainer.classList.remove("hide")
   gElCanvas = document.querySelector('#canvas')
   let imgUrl=`url("img/memesGallery/${imgName}.jpg")`
-  let bgi = document.querySelector('.canvas').style.backgroundImage=imgUrl
+  document.querySelector('.canvas').style.backgroundImage=imgUrl
   gCtx = gElCanvas.getContext('2d')
   addListeners()
   console.log(gElCanvas)
@@ -206,4 +207,14 @@ function onSetColor(value) {
 }
 function changeColorPickerBorder(value) {
     document.querySelector(".img10").style.border = `3px ridge ${value}`
+}
+function toggleMenu() {
+  let burgerMenu = `url("img/icons/menu-icon-24.png")`
+  let xMenu=`url("img/icons/x.png")`
+  document.body.classList.toggle('menu-open');
+  if (menuBtn === 2) {
+    document.querySelector('.btn-menu').style.backgroundImage = burgerMenu
+    menuBtn=1
+  }
+  else { document.querySelector('.btn-menu').style.backgroundImage = xMenu, menuBtn = 2 }
 }

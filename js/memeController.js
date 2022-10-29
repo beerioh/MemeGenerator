@@ -233,7 +233,7 @@ function onRenderMemesGallery() {
 function renderMemesToGallery(gMemes) {
     const memeGallery = document.querySelector('.saved-meme-gallery')
     const strHtml = gMemes.map(meme => {
-      return `< img src =data:image/png;base64, "${meme}"/>`
+      return `<img class="meme-img imgItem" src="${meme}" style="background-image: url("${meme}")"/>`
     }).join('')
     memeGallery.innerHTML = strHtml
   }

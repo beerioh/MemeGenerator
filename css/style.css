@@ -38,6 +38,11 @@ a{
         color: var(--clr4);
         cursor: not-allowed;
 }
+.canvas{
+  /* background-image: url("/img/memesGallery/1.jpg"); */
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 .flex{
     display: flex;
 }

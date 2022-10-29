@@ -4,20 +4,24 @@ let gCtx
 let gTextItem = []
 let gImgName
 let gFont
+let gIndx
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 function memeInit(imgName) {
-    gImgName=imgName
+  gImgName = imgName
   const gridContainer = document.querySelector('.gallery-container')
   console.log(gridContainer)
-    gridContainer.classList.add("hide")
-    const editorContainer = document.querySelector('.editor-container')
-    editorContainer.classList.remove("hide")
-    gElCanvas = document.querySelector('#canvas')
-    gCtx = gElCanvas.getContext('2d')
-    addListeners()
-    renderMeme(imgName)
-    const pos = { a: { x: gElCanvas.width * 0.5, y: gElCanvas.height * 0.22 }, b: { x: gElCanvas.width * 0.5, y: gElCanvas.height * 0.9},width:gElCanvas.width,height:gElCanvas.height }
-    createText(pos,gElCanvas)
+  gridContainer.classList.add("hide")
+  const editorContainer = document.querySelector('.editor-container')
+  editorContainer.classList.remove("hide")
+  gElCanvas = document.querySelector('#canvas')
+  let imgUrl=`url("img/memesGallery/${imgName}.jpg")`
+  let bgi = document.querySelector('.canvas').style.backgroundImage=imgUrl
+  gCtx = gElCanvas.getContext('2d')
+  addListeners()
+  console.log(gElCanvas)
+  renderMeme(imgName)
+  const pos = { a: { x: gElCanvas.width * 0.5, y: gElCanvas.height * 0.22 }, b: { x: gElCanvas.width * 0.5, y: gElCanvas.height * 0.9},width:gElCanvas.width,height:gElCanvas.height }
+  createText(pos,gElCanvas)
 }
 function onPageChange(page) {
     const editorContainer=document.querySelector('.editor-container')
@@ -65,37 +69,35 @@ function renderMeme() {
 function onDown(ev) {
   //Get the ev pos from mouse or touch
     const pos = getEvPos(ev)
-    console.log(pos)
-    console.log(isTextClicked(pos))
-  if (!isTextClicked(pos)) return
-  setTextDrag(true)
-  //Save the pos we start from 
+  let gIndx = isTextClicked(pos)
+  console.log(gIndx)
+  if (!gIndx) return
   gStartPos = pos
   document.body.style.cursor = 'grabbing'
-
 }
 function onMove(ev) {
   console.log('Im from onMove')
-  const { isDrag } = getText()
+
+  const isDrag  = getTextForDrag()
   if (!isDrag) return
   const pos = getEvPos(ev)
   //Calc the delta , the diff we moved
   const dx = pos.x - gStartPos.x
   const dy = pos.y - gStartPos.y
-  moveText(dx, dy)
+  moveText(dx, dy,gIndx)
   //Save the last pos , we remember where we`ve been and move accordingly
   gStartPos = pos
   //The canvas is render again after every move
-  renderCanvas()
+  renderMeme()
 }
 function onUp() {
   console.log('Im from onUp')
-  setTextDrag(false)
+  setTextDrag()
+  // gId=''
   document.body.style.cursor = 'grab'
 }
 function resizeCanvas() {
   const elContainer = document.querySelector('.canvas-container')
-  console.log(elContainer.offsetWidth)
   gElCanvas.width = elContainer.offsetWidth
   gElCanvas.height = elContainer.offsetHeight
 }
@@ -120,9 +122,9 @@ function getEvPos(ev) {
   }
   return pos
 }
-function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke,color) {
+function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke,color,stroke) {
     gCtx.lineWidth = lineWidth||1
-    gCtx.strokeStyle = 'black'
+    gCtx.strokeStyle = stroke
     gCtx.fillStyle = color
     gCtx.textAlign= textAlign
     gCtx.font = `${size}px ${font}`

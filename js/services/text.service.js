@@ -1,9 +1,10 @@
 let gText
 let gSelectedText = 0
-let gFontSize=60
+let gFontSize = 60
+let gStartPos
+let gId={}
 
 function createText({ a, b ,width}) {
-  
   gFontSize=width/11
   gText = [{
     id:makeId(),
@@ -15,7 +16,8 @@ function createText({ a, b ,width}) {
     lineWidth: 3,
     textAlign: 'center',
     isStroke: true,
-    color:'white'
+    color: 'white',
+    stroke: 'black'
   },
     {
     id:makeId(),
@@ -27,7 +29,8 @@ function createText({ a, b ,width}) {
     lineWidth: 1,
     textAlign: 'center',
     isStroke: true,
-    color:'white'
+    color: 'white',
+    stroke: 'black'
     
     }]
 }
@@ -43,7 +46,8 @@ function addText({x,y}) {
     lineWidth: 1,
     textAlign: 'center',
     isStroke: true,
-    color:'white'
+    color: 'white',
+    stroke: 'black'
     }
   )
   gSelectedText=gText.length-1
@@ -51,6 +55,10 @@ function addText({x,y}) {
 }
 function getText() {
   return gText
+}
+function getTextForDrag(  ) {
+  console.log(gText[gId.indx].isDrag)
+ return gText[gId.indx].isDrag
 }
 function getTextLine() {
   return gText[gSelectedText].text
@@ -60,18 +68,28 @@ function mapTexts() {
         drawText(text.text,text.pos.x,text.pos.y,text.size,text.font,text.lineWidth,text.textAlign,text.isStroke,text.color)
         })
 }
-function isTextClicked({ x, y }) {
+function isTextClicked(pos) {
+  const canvas = document.getElementById("canvas");
+  const gCtx = canvas.getContext("2d");
   const clickedText = gText.find(line => {
-    return line.size=55
-  })  
-     return 
+    return pos.x > line.pos.x-(0.5*gCtx.measureText(line.text).width) && pos.x < line.pos.x + (gCtx.measureText(line.text).width*0.5) &&
+    pos.y < line.pos.y && pos.y > line.pos.y - line.size
+  })
+  if (clickedText) {
+    gText[findIndex(gText, clickedText.id)].isDrag = true
+     console.log(gText)
+    gId = { id: clickedText.id, indx: findIndex(gText, clickedText.id) }
+    return clickedText.id
+  }
 }
-function setTextDrag(isDrag) {
-  gText.isDrag = isDrag
+function setTextDrag( ) {
+  gText[gId.indx].isDrag = false
+  gId={}
 }
 function moveText(dx, dy) {
-  gText.pos.x += dx
-  gText.pos.y += dy
+  console.log('yes')
+  gText[gId.indx].pos.x += dx
+  gText[gId.indx].pos.y += dy
 }
 function updateText(text) {
   gText[gSelectedText].text = text

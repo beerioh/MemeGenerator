@@ -308,7 +308,7 @@ grid-column: 6;
         border-inline-start: 1px solid #ccc;
         inset: auto 0 0 auto;
         width: 100vw;
-        transform: translateY(-100%);
+        transform: translateY(-150%);
         border: 1px solid black;
         border-radius: 15PX;
         background-color: var(--clr2);
@@ -317,7 +317,7 @@ grid-column: 6;
         margin-bottom: 500px;
     }
     body.menu-open .main-nav {
-        transform: translateY(60%);
+        transform: translateY(45%);
         box-shadow: -9px 0px 14px rgb(0 0 0 / 30%);
     }
     a:visited { color: var(--clr4); text-decoration: none; }

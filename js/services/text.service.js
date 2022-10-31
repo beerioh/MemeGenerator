@@ -6,7 +6,6 @@ let gId = {}
 let imgCounter = 0
 let gMemes = []
 const MEME_TO_STORAGE = "memeArray"
-
 function createText({ a, b ,width}) {
   gFontSize=width/11
   gText = [{
@@ -18,9 +17,10 @@ function createText({ a, b ,width}) {
     text: 'Lets MeMe A',
     lineWidth: 3,
     textAlign: 'center',
-    isStroke: true,
+    isStroke: 'black',
     color: 'white',
-    stroke: 'orange'
+    stroke: 'black',
+    active:true
   },
     {
     id:makeId(),
@@ -29,15 +29,16 @@ function createText({ a, b ,width}) {
     font: 'Impact',
     isDrag: false,
     text: 'Lets MeMe B',
-    lineWidth: 1,
+    lineWidth: 3,
     textAlign: 'center',
     isStroke: true,
     color: 'white',
-    stroke: 'black'
-    
+    stroke: 'black',
+    active:false
     }]
 }
-function addText({x,y}) {
+function addText({ x, y }) {
+  gText[gSelectedText].active=false
   gText.push(
     {
     id:makeId(),
@@ -46,11 +47,12 @@ function addText({x,y}) {
     font: 'Impact',
     isDrag: false,
     text: `Lets MeMe ${gText.length}`,
-    lineWidth: 1,
+    lineWidth: 3,
     textAlign: 'center',
     isStroke: true,
     color: 'white',
-    stroke: 'black'
+      stroke: 'black',
+    active:true
     }
   )
   gSelectedText=gText.length-1
@@ -60,36 +62,17 @@ function getText() {
   return gText
 }
 function getTextForDrag() {
-  gText[gSelectedText].stroke ='red'
- return gText[gId.indx].isDrag
-}
-function getTextLine() {k
-  return gText[gSelectedText].text
+  gText[gSelectedText].active = true
+  return gText[gSelectedText].isDrag
+  
 }
 function mapTexts() {
    gText.map((text,indx) => {
-        drawText(text.text,text.pos.x,text.pos.y,text.size,text.font,text.lineWidth,text.textAlign,text.isStroke,text.color)
+        drawText(text.text,text.pos.x,text.pos.y,text.size,text.font,text.lineWidth,text.textAlign,text.isStroke,text.color,text.stroke,text.active)
         })
 }
-function isTextClicked(pos) {
-  const canvas = document.getElementById("canvas");
-  const gCtx = canvas.getContext("2d");
-  const clickedText = gText.find(line => {
-    return pos.x > line.pos.x-(0.5*gCtx.measureText(line.text).width) && pos.x < line.pos.x + (gCtx.measureText(line.text).width*0.5) &&
-    pos.y < line.pos.y && pos.y > line.pos.y - line.size
-  })
-  if (clickedText) {
-    gText[findIndex(gText, clickedText.id)].isDrag = true
-    gId = { id: clickedText.id, indx: findIndex(gText, clickedText.id) }
-    text = gText[gId.indx].text
-    let textInfo = { text, clickedText: clickedText.id }
-    gSelectedText=gId.indx
-    return textInfo
-  }
-}
 function setTextDrag( ) {
-  gText[gId.indx].isDrag = false
-  gId={}
+  gText[gSelectedText].isDrag = false
 }
 function moveText(dx, dy) {
   gText[gId.indx].pos.x += dx
@@ -99,7 +82,28 @@ function updateText(text) {
   gText[gSelectedText].text = text
 }
 function nextLine() {
+  gText[gSelectedText].active=false
+  if (gSelectedText === gText.length-1) { gSelectedText = -1 }
+  gSelectedText++
+  gText[gSelectedText].active = true
   return gText[gSelectedText].text
+}
+function getClickedText(pos, gCtx) {
+  const clickedText = gText.find(line => {
+    return pos.x > line.pos.x - (0.5 * gCtx.measureText(line.text).width) && pos.x < line.pos.x + (gCtx.measureText(line.text).width * 0.5) &&
+        pos.y < line.pos.y && pos.y > line.pos.y - line.size
+  })
+  if (clickedText) {
+    gText[gSelectedText].isDrag = false
+    gText[gSelectedText].active = false
+    gSelectedText=findIndex(gText, clickedText.id)
+    gText[gSelectedText].isDrag = true
+    gId = {id:clickedText.id, indx:gSelectedText}
+    text = gText[gId.indx].text
+    let textInfo = { text, clickedText: clickedText.id }
+    gText[gSelectedText].active = true
+    return textInfo
+  }
 }
 function deleteSelectedMeme() {
   gText.splice(gSelectedText, 1)
@@ -107,7 +111,6 @@ function deleteSelectedMeme() {
 }
 function incSize() {
   let textSizePre = gText[gSelectedText].text.length * gText[gSelectedText].size
-  
   gText[gSelectedText].size = gText[gSelectedText].size + 5
   let textSizePost = gText[gSelectedText].text.length * gText[gSelectedText].size
   gText[gSelectedText].pos.x=gText[gSelectedText].pos.x+((textSizePost-textSizePre)*0.1)
@@ -120,9 +123,7 @@ function decSize() {
   
 }
 function setAlinement(type) {
-  console.log(type)
-  gText[gSelectedText].textAlign=type
-  
+gText[gSelectedText].textAlign=type
 }
 function changeTextHight(direction, height) {
   let element = gText[gSelectedText].pos.y
@@ -133,8 +134,9 @@ function changeTextHight(direction, height) {
 function setFont(font) {
   gText[gSelectedText].font=`${font}`
 }
-function toggleStroke() {
-  gText[gSelectedText].isStroke = !gText[gSelectedText].isStroke
+function colorStroke(color) {
+  gText[gSelectedText].stroke=color
+ = color
 }
 function changeTextColor(value) {
   gText[gSelectedText].color=value
@@ -144,11 +146,11 @@ function saveDataUrl(imgData) {
   localStorage.setItem(MEME_TO_STORAGE, gMemes);
 }
 function loadCanvas() {
-
-  var image = localStorage.getItem(MEME_TO_STORAGE);
-console.log(image)
-  imgCounter++
-  // gMemes.push({imgCounter: saveDataUrl(image) })
-  console.log(gMemes)
-  renderMemesToGallery(gMemes)
+localStorage.getItem(MEME_TO_STORAGE);
+imgCounter++
+renderMemesToGallery(gMemes)
+}
+function cancelActive() {
+  console.log(gText[gSelectedText])
+  gText[gSelectedText].active=false
 }

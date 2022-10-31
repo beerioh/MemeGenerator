@@ -71,26 +71,7 @@ function onDown(ev) {
   document.querySelector('.item1').value = textInfo.text
   gStartPos = pos
   document.body.style.cursor = 'grabbing'
-}
-function onMove(ev) {
-  const isDrag  = getTextForDrag()
-  if (!isDrag) return
-  const pos = getEvPos(ev)
-  onChangeLine()
-  const dx = pos.x - gStartPos.x
-  const dy = pos.y - gStartPos.y
-  moveText(dx, dy,gIndx)
-  gStartPos = pos
   renderMeme()
-}
-function onUp() {
-  setTextDrag()
-  document.body.style.cursor = 'grab'
-}
-function resizeCanvas() {
-  const elContainer = document.querySelector('.canvas-container')
-  gElCanvas.width = elContainer.offsetWidth
-  gElCanvas.height = elContainer.offsetHeight
 }
 function getEvPos(ev) {
   let pos = {
@@ -107,24 +88,48 @@ function getEvPos(ev) {
   }
   return pos
 }
-function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke,color,stroke) {
+function isTextClicked(pos) {
+  const canvas = document.getElementById("canvas");
+  const gCtx = canvas.getContext("2d");
+   return getClickedText(pos, gCtx)
+}
+function onMove(ev) {
+  const isDrag  = getTextForDrag()
+  if (!isDrag) return
+  const pos = getEvPos(ev)
+  const dx = pos.x - gStartPos.x
+  const dy = pos.y - gStartPos.y
+  moveText(dx, dy,gIndx)
+  gStartPos = pos
+  renderMeme()
+}
+function onUp() {
+  setTextDrag()
+  document.body.style.cursor = 'grab'
+}
+function resizeCanvas() {
+  const elContainer = document.querySelector('.canvas-container')
+  gElCanvas.width = elContainer.offsetWidth
+  gElCanvas.height = elContainer.offsetHeight
+}
+function drawText(text, x, y, size,font,lineWidth,textAlign,isStroke,color,stroke,active) {
     gCtx.lineWidth = lineWidth||1
     gCtx.strokeStyle = stroke
     gCtx.fillStyle = color
-    gCtx.textAlign= textAlign
-    gCtx.font = `${size}px ${font}`
+    gCtx.font = size + 'px ' + font;
+    gCtx.textAlign = textAlign
+    var width = gCtx.measureText(text).width;
+    // gCtx.font = `${size}px ${font}`
     gCtx.fillText(text, x, y)
-    if (isStroke) {
-        gCtx.strokeText(text, x, y)
+    gCtx.strokeText(text, x, y);
+  
+  if (active) {
+    gCtx.strokeRect(x-(width/1.8), y-size, width*1.1,size* 1.286);
+        
     }
-  }
+}
 function clearCanvas() {
   gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-}
-function downloadCanvas(elLink) {
-  const data = gElCanvas.toDataURL() 
-  elLink.href = data 
-  elLink.download = 'canva' 
 }
 function addListeners() {
   addMouseListeners()
@@ -149,9 +154,15 @@ function onTextEdit(text) {
     renderMeme(gImgName)
 }
 function downloadCanvas(elLink) {
+  
   const data = gElCanvas.toDataURL()
   elLink.href = data
   elLink.download = 'my-img.jpg'
+
+}
+function onCancelSelected() {
+   cancelActive()
+   renderMeme()
 }
 function onChangeLine() {
     let text=nextLine()
@@ -177,7 +188,6 @@ function onDecreaseSize() {
     renderMeme()
 }
 function onAlineText(type) {
-    console.log(type)
     setAlinement(type)
     renderMeme()
 }
@@ -192,15 +202,20 @@ function onSetFont() {
     gFont=font
     renderMeme()
 }
-function onStrokeToggle() {
-    toggleStroke()
+function onStrokeColor(value) {
+  console.log(value)
+  document.querySelector(".img9").style.border = `3px ridge ${value}`
+    // changeTextColor(value)
+    colorStroke(value)
     renderMeme()
+}
+function onOpenColorPickerStroke() {
+    document.querySelector(".colorS").click()
 }
 function onOpenColorPicker() {
     document.querySelector(".colorP").click()
 }
 function onSetColor(value) {
-    console.log(`"${value}"`)
     document.querySelector(".img10").style.border = `3px ridge ${value}`
     changeTextColor(value)
      renderMeme()
@@ -236,8 +251,4 @@ function renderMemesToGallery(gMemes) {
       return `<img class="meme-img imgItem" src="${meme}" style="background-image: url("${meme}")"/>`
     }).join('')
     memeGallery.innerHTML = strHtml
-  }
-
-
-    
-     
+}

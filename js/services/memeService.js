@@ -14,7 +14,6 @@ function getImgSize(img, canWidth, canHeight) {
         return { canHeight: img.height * canWidth / img.width, canWidth}
     }
     if (imgProp <= canProp) {
-        console.log(img.height * canHeight / img.width,img.height,canHeight,img.width)
         return { canHeight, canWidth: img.width * canHeight /img.height }
     }
 }
